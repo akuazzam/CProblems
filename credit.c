@@ -70,7 +70,7 @@ bool checksum (long credit) {
 
 int startswith (long credit) {
     // keep removing lesser digits (dividing by 10) until credit is less than 100 (or is between 0-99)
-    // This gets us the first digit
+    // This gets us the first two digits
     while (credit > 100) {
         credit = credit / 10;
     }
