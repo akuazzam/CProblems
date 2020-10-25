@@ -222,12 +222,11 @@ bool iscyclic () {
 bool iscyclic_recur (int src) {
     if (visited[src]) return true;
     visited[src] = true;
-    bool ans = false;
     for (int i = 0; i < candidate_count; i ++) {
-        if (locked[src][i]) ans = ans || iscyclic_recur(i);
+        if (locked[src][i] && iscyclic_recur(i)) return true;
     }
 
-    return ans;
+    return false;
 }
 
 //help method for testing. not used in solution
