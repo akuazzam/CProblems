@@ -14,6 +14,7 @@ bool locked[MAX][MAX];
 
 // checks if there is a cylce in locked graph
 bool visited [MAX];
+bool stack [MAX];
 
 // Each pair has a winner, loser
 typedef struct
@@ -210,9 +211,13 @@ void swap (int i, int j) {
 }
 
 bool iscyclic () {
+    //clear visited and stack arrays
     for (int i = 0; i < candidate_count; i ++) {
-        // clear visited array
-        for (int k = 0; k < candidate_count; k ++) visited[k] = false;
+        visited[i] = false;
+        stack[i] = false;
+    }
+    for (int i = 0; i < candidate_count; i ++) {
+        if (visited[i]) continue;
         if (iscyclic_recur (i)) return true;
     }
 
@@ -220,11 +225,13 @@ bool iscyclic () {
 }
 
 bool iscyclic_recur (int src) {
-    if (visited[src]) return true;
+    if (stack[src]) return true;
     visited[src] = true;
+    stack[src] = true;
     for (int i = 0; i < candidate_count; i ++) {
         if (locked[src][i] && iscyclic_recur(i)) return true;
     }
+    stack[src] = false;
 
     return false;
 }
